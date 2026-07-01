@@ -1,0 +1,8 @@
+{
+  "default_spacing_ft": 8.0,
+  "end_offset_ft": 2.0,
+  "trapeze_width_in": 36,
+  "ignore_existing_hangers": true,
+  "minimum_clearance_in": 6,
+  "report_after_run": true
+}

@@ -1,17 +1,19 @@
-## Description
+## Summary
+
+Describe the changes.
 
 ## Related Issue
 
-## Testing Completed
+Closes #
 
-- [ ] Revit 2023
-- [ ] pyRevit
-- [ ] No Errors
+## Testing
 
-## Screenshots
+- [ ] Tested in Revit 2023
+- [ ] No Python syntax errors
+- [ ] Lint passes
 
 ## Checklist
 
-- [ ] Documentation Updated
-- [ ] Tests Pass
-- [ ] Formatting Passes
+- [ ] Documentation updated
+- [ ] Code formatted
+- [ ] Ready for review
