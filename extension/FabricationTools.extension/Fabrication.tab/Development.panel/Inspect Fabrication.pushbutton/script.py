@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from pyrevit import revit, forms
+from pyrevit import revit, forms, script
 from Autodesk.Revit.DB.Fabrication import FabricationPart
 
 doc = revit.doc
