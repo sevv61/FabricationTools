@@ -1,1 +1,11 @@
+# Default owner
 * @sevv61
+
+# Documentation
+/docs/ @sevv61
+
+# GitHub Actions
+/.github/ @sevv61
+
+# pyRevit Extension
+/extension/ @sevv61
