@@ -2,10 +2,10 @@
 """
 collector.py
 
-Fabrication element collection utilities.
+Collect FabricationPart elements from the active Revit document.
 
-Author: Sam Vanvalkenbugh
-Project: Fabrication Tools
+Target:
+    Autodesk Revit 2023
 """
 
 from Autodesk.Revit.DB import FilteredElementCollector
@@ -13,31 +13,36 @@ from Autodesk.Revit.DB.Fabrication import FabricationPart
 
 
 class FabricationCollector(object):
-    """
-    Collects FabricationPart elements from the active Revit document.
-    """
+    """Collects FabricationPart objects."""
 
     def __init__(self, doc):
         self.doc = doc
 
     def get_all_parts(self):
-        """
-        Returns a list of all FabricationPart objects.
-        """
         return list(
             FilteredElementCollector(self.doc)
             .OfClass(FabricationPart)
             .WhereElementIsNotElementType()
         )
 
-    def get_part_count(self):
-        """
-        Returns the total number of fabrication parts.
-        """
+    def count(self):
         return len(self.get_all_parts())
 
-    def get_sample(self, count=10):
-        """
-        Returns the first few fabrication parts.
-        """
-        return self.get_all_parts()[:count]
+    def first(self):
+        parts = self.get_all_parts()
+        return parts[0] if parts else None
+
+    def sample(self, size=10):
+        return self.get_all_parts()[:size]
+
+    def by_service(self, service_name):
+        results = []
+
+        for part in self.get_all_parts():
+            try:
+                if part.ServiceName == service_name:
+                    results.append(part)
+            except Exception:
+                pass
+
+        return results

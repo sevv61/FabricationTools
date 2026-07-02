@@ -1,27 +1,49 @@
 # -*- coding: utf-8 -*-
 
-from pyrevit import revit, forms, script
-from Autodesk.Revit.DB.Fabrication import FabricationPart
+from pyrevit import revit, forms
 
-doc = revit.doc
-uidoc = revit.uidoc
+from lib.fabrication.collector import FabricationCollector
 
-selection = uidoc.Selection.GetElementIds()
 
-if len(selection) != 1:
-    forms.alert("Select exactly ONE Fabrication Part.")
-    script.exit()
+def main():
+    doc = revit.doc
 
-element = doc.GetElement(list(selection)[0])
+    collector = FabricationCollector(doc)
 
-if not isinstance(element, FabricationPart):
-    forms.alert("Selected element is not a Fabrication Part.")
-    script.exit()
+    parts = collector.get_all_parts()
 
-message = ""
+    if not parts:
+        forms.alert(
+            "No Fabrication Parts found.",
+            title="Inspect Fabrication"
+        )
+        return
 
-message += "ID: {}\n".format(element.Id.IntegerValue)
-message += "Name: {}\n".format(element.Name)
-message += "Category: {}\n".format(element.Category.Name)
+    message = []
 
-forms.alert(message)
+    message.append(
+        "Fabrication Parts Found: {}\n".format(len(parts))
+    )
+
+    sample = parts[:10]
+
+    for part in sample:
+
+        message.append("--------------------------------")
+
+        message.append(
+            "ID: {}".format(part.Id.IntegerValue)
+        )
+
+        message.append(
+            "Name: {}".format(part.Name)
+        )
+
+    forms.alert(
+        "\n".join(message),
+        title="Inspect Fabrication"
+    )
+
+
+if __name__ == "__main__":
+    main()
