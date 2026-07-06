@@ -27,16 +27,21 @@ def main():
 
     sample = parts[:10]
 
-    for part in sample:
+   for part in sample:
 
-        message.append("--------------------------------")
+    message.append("--------------------------------")
 
-        message.append(
-            "ID: {}".format(part.Id.IntegerValue)
-        )
+    message.append(
+        "ID: {}".format(part.Id.IntegerValue)
+    )
 
+    try:
         message.append(
             "Name: {}".format(part.Name)
+        )
+    except Exception:
+        message.append(
+            "Name: <Unavailable>"
         )
 
     forms.alert(
