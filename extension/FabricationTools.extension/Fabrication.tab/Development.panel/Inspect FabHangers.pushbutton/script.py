@@ -27,7 +27,7 @@ def main():
 
     sample = parts[:10]
 
-   for part in sample:
+for part in sample:
 
     message.append("--------------------------------")
 

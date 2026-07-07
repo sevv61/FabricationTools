@@ -11,7 +11,7 @@ Target:
     Autodesk Revit 2023
 """
 
-from lib.geometry.geometry import GeometryInfo
+from geometry.geometry import GeometryInfo
 
 
 class FabricationPartInfo(object):
