@@ -1,0 +1,6 @@
+from pyrevit import forms
+import Autodesk.Revit.DB as DB
+
+names = [n for n in dir(DB) if "Fabrication" in n]
+
+forms.alert("\n".join(sorted(names)), title="Fabrication API")
