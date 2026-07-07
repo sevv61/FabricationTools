@@ -12,7 +12,6 @@ Author: Sam Vanvalkenbugh
 Target: Autodesk Revit 2023
 """
 
-from Autodesk.Revit.DB import BuiltInCategory
 
 
 class FabricationPartInfo(object):
