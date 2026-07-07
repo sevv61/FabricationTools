@@ -9,7 +9,7 @@ Target:
 """
 
 from Autodesk.Revit.DB import FilteredElementCollector
-from Autodesk.Revit.DB import FabricationPart
+import Autodesk.Revit.DB as DB
 
 
 class FabricationCollector(object):
@@ -23,10 +23,10 @@ class FabricationCollector(object):
         """Return all Fabrication Parts in the document."""
         if self._parts is None:
             self._parts = list(
-                Autodesk.Revit.DB.FilteredElementCollector(self.doc)
-                .OfCategory(BuiltInCategory.OST_FabricationDuctwork)
-                .WhereElementIsNotElementType()
-            )
+                DB.FilteredElementCollector(self.doc)
+                  .OfClass(DB.FabricationPart)
+                  .WhereElementIsNotElementType()
+)
 
         return self._parts
 
