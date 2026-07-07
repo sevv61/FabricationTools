@@ -1,6 +1,6 @@
 from pyrevit import revit, forms
 
-from lib.fabrication.parts import FabricationPartInfo
+from fabrication.parts import FabricationPartInfo
 
 
 def main():
