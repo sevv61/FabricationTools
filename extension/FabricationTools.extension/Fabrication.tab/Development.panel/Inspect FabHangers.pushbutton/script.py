@@ -2,7 +2,7 @@
 
 from pyrevit import revit, forms
 
-from lib.fabrication.collector import FabricationCollector
+from fabrication.collector import FabricationCollector
 
 
 def main():

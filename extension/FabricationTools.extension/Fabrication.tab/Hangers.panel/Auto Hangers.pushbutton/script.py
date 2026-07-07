@@ -10,8 +10,8 @@ Target: Autodesk Revit 2023
 
 from pyrevit import revit, forms
 
-from lib.fabrication.collector import FabricationCollector
-from lib.fabrication.parts import FabricationPartInfo
+from fabrication.collector import FabricationCollector
+from fabrication.parts import FabricationPartInfo
 
 
 def main():
