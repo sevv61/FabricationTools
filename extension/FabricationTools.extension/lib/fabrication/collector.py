@@ -8,10 +8,8 @@ Target:
     Autodesk Revit 2023
 """
 
-from Autodesk.Revit.DB import (
-    FilteredElementCollector,
-    FabricationPart
-)
+from Autodesk.Revit.DB import FilteredElementCollector
+from Autodesk.Revit.DB import FabricationPart
 
 
 class FabricationCollector(object):
