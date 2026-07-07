@@ -2,32 +2,42 @@
 """
 parts.py
 
-Wrapper around Autodesk Revit FabricationPart.
+Wrapper around Autodesk Revit FabricationPart objects.
 
-This class provides a safe, Pythonic interface to FabricationPart
-properties and isolates the rest of the project from direct Revit API
-calls.
+Provides a safe, Pythonic interface for accessing fabrication
+properties and geometry information.
 
-Author: Sam Vanvalkenbugh
-Target: Autodesk Revit 2023
+Target:
+    Autodesk Revit 2023
 """
 
+from lib.geometry.geometry import GeometryInfo
 
 
 class FabricationPartInfo(object):
-    """Wrapper for Autodesk.Revit.DB.Fabrication.FabricationPart."""
+    """
+    Wrapper around Autodesk.Revit.DB.Fabrication.FabricationPart.
+    """
 
     def __init__(self, part):
         self._part = part
 
+    # ----------------------------------------------------------
+    # Core Element Access
+    # ----------------------------------------------------------
+
     @property
     def element(self):
-        """Return the underlying Revit element."""
+        """
+        Return underlying Revit element.
+        """
         return self._part
 
     @property
     def id(self):
-        """Element Id as an integer."""
+        """
+        Element Id as integer.
+        """
         try:
             return self._part.Id.IntegerValue
         except Exception:
@@ -35,15 +45,33 @@ class FabricationPartInfo(object):
 
     @property
     def unique_id(self):
-        """Revit UniqueId."""
+        """
+        Revit UniqueId.
+        """
         try:
             return self._part.UniqueId
         except Exception:
             return ""
 
     @property
+    def is_valid(self):
+        """
+        True if Revit element is still valid.
+        """
+        try:
+            return self._part.IsValidObject
+        except Exception:
+            return False
+
+    # ----------------------------------------------------------
+    # Classification
+    # ----------------------------------------------------------
+
+    @property
     def name(self):
-        """Element name."""
+        """
+        Fabrication part name.
+        """
         try:
             return self._part.Name
         except Exception:
@@ -51,27 +79,18 @@ class FabricationPartInfo(object):
 
     @property
     def category(self):
-        """Category name."""
+        """
+        Revit category name.
+        """
         try:
             return self._part.Category.Name
         except Exception:
             return "<None>"
 
     @property
-    def category_id(self):
-        """BuiltInCategory integer value."""
-        try:
-            return self._part.Category.Id.IntegerValue
-        except Exception:
-            return None
-
-    @property
     def service(self):
         """
-        Fabrication Service Name.
-
-        Some FabricationPart objects may not expose this property,
-        so return '<Unavailable>' instead of raising an exception.
+        Fabrication service name.
         """
         try:
             return self._part.ServiceName
@@ -80,30 +99,54 @@ class FabricationPartInfo(object):
 
     @property
     def item_number(self):
-        """Fabrication item number."""
+        """
+        Fabrication item number.
+        """
         try:
             return self._part.ItemNumber
         except Exception:
             return "<Unavailable>"
 
-    @property
-    def is_valid(self):
-        """True if the Revit element is still valid."""
-        try:
-            return self._part.IsValidObject
-        except Exception:
-            return False
+    # ----------------------------------------------------------
+    # Geometry
+    # ----------------------------------------------------------
 
     @property
-    def is_fabrication_part(self):
-        """Always True for wrapped objects."""
-        return True
+    def geometry(self):
+        """
+        Return GeometryInfo wrapper.
+        """
+        return GeometryInfo(self._part)
+
+    @property
+    def length(self):
+        """
+        Convenience access to geometry length.
+        """
+        return self.geometry.length
+
+    @property
+    def start_point(self):
+        """
+        Convenience access to start point.
+        """
+        return self.geometry.start_point
+
+    @property
+    def end_point(self):
+        """
+        Convenience access to end point.
+        """
+        return self.geometry.end_point
+
+    # ----------------------------------------------------------
+    # Reporting
+    # ----------------------------------------------------------
 
     def as_dict(self):
         """
-        Return commonly used information as a dictionary.
-
-        Useful for reporting, debugging, and exporting.
+        Convert commonly used values to dictionary.
+        Useful for reports and debugging.
         """
         return {
             "id": self.id,
@@ -112,6 +155,7 @@ class FabricationPartInfo(object):
             "category": self.category,
             "service": self.service,
             "item_number": self.item_number,
+            "length": self.length,
             "is_valid": self.is_valid,
         }
 
