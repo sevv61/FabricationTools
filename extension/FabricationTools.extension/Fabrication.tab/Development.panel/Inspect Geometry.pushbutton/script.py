@@ -1,6 +1,6 @@
 from pyrevit import revit, forms
 
-from fabrication.parts import FabricationPartInfo
+import fabrication.parts as parts
 
 
 def main():
@@ -14,7 +14,7 @@ def main():
         )
         return
 
-    fab = FabricationPartInfo(selection.first)
+    fab = parts.FabricationPartInfo(selection.first)
 
     geo = fab.geometry
 

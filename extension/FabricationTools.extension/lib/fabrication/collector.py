@@ -13,19 +13,16 @@ import Autodesk.Revit.DB as DB
 
 
 class FabricationCollector(object):
-    """Collects Fabrication Parts from the active Revit document."""
 
     def __init__(self, doc):
         self.doc = doc
-        self._parts = None
 
     def get_all_parts(self):
-        """Return all Fabrication Parts in the document."""
-        if self._parts is None:
-            self._parts = list(
-                DB.FilteredElementCollector(self.doc)
-                  .OfClass(DB.FabricationPart)
-                  .WhereElementIsNotElementType()
+        return list(
+            DB.FilteredElementCollector(self.doc)
+              .OfClass(DB.FabricationPart)
+              .WhereElementIsNotElementType()
+        )
 )
 
         return self._parts
