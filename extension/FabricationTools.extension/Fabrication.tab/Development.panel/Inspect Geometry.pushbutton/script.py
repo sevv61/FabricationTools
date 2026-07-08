@@ -14,7 +14,9 @@ def main():
         )
         return
 
-    fab = parts.FabricationPartInfo(selection.first())
+    element = list(selection)[0]
+
+    fab = parts.FabricationPartInfo(element)
 
     geo = fab.geometry
 
@@ -36,6 +38,18 @@ def main():
     msg.append("")
     msg.append("End Point")
     msg.append(str(geo.end_point))
+    msg.append("")
+    msg.append("Mid Point")
+    msg.append(str(geo.midpoint))
+
+    msg.append("")
+    msg.append("Direction")
+    msg.append(str(geo.direction))
+
+    msg.append("")
+    msg.append("Horizontal : {}".format(geo.is_horizontal))
+    msg.append("Vertical   : {}".format(geo.is_vertical))
+    msg.append("Sloped     : {}".format(geo.is_sloped))
 
     forms.alert("\n".join(msg), title="Geometry")
 

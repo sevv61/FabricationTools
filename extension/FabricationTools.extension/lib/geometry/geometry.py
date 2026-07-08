@@ -18,6 +18,66 @@ class GeometryInfo(object):
         self.part = part
 
     @property
+    def direction(self):
+        """
+        Unit direction vector from start to end.
+        """
+        if self.curve:
+            return (self.end_point - self.start_point).Normalize()
+
+        return None
+
+    @property
+    def direction(self):
+        """
+        Unit direction vector from start to end.
+        """
+        if self.curve:
+            return (self.end_point - self.start_point).Normalize()
+
+        return None
+    
+    @property
+    def midpoint(self):
+        """
+        Midpoint of the fabrication part.
+        """
+        if self.curve:
+            return self.curve.Evaluate(0.5, True)
+
+        return None
+    
+
+    @property
+    def is_horizontal(self):
+        """
+        True if essentially horizontal.
+        """
+        if not self.direction:
+         return False
+
+        return abs(self.direction.Z) < 0.001
+
+
+    @property
+    def is_vertical(self):
+        """
+        True if essentially vertical.
+        """
+        if not self.direction:
+            return False
+
+        return abs(self.direction.Z) > 0.999
+
+
+    @property
+    def is_sloped(self):
+        """
+        True if neither horizontal nor vertical.
+        """
+        return not self.is_horizontal and not self.is_vertical
+
+    @property
     def location_curve(self):
         """Return the element's LocationCurve."""
         location = self.part.Location
