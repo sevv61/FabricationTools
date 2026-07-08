@@ -14,7 +14,7 @@ def main():
         )
         return
 
-    fab = parts.FabricationPartInfo(selection.first)
+    fab = parts.FabricationPartInfo(selection.first())
 
     geo = fab.geometry
 

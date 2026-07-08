@@ -11,11 +11,7 @@ Target:
     Autodesk Revit 2023
 """
 
-from pyrevit import forms
-
-
 from geometry.geometry import GeometryInfo
-
 
 
 class FabricationPartInfo(object):
