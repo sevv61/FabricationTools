@@ -6,10 +6,12 @@ from .base_rules import HangerRuleResult
 
 def evaluate_pipe(data):
 
+
     result = HangerRuleResult()
 
 
     result.requires_hanger = True
+
 
     result.hanger_type = (
         "PIPE_HANGER"

@@ -6,9 +6,12 @@ from .base_rules import HangerRuleResult
 
 def evaluate_duct(data):
 
+
     result = HangerRuleResult()
 
+
     result.requires_hanger = True
+
 
     result.hanger_type = (
         "DUCT_HANGER"
@@ -25,6 +28,7 @@ def evaluate_duct(data):
                 "Large duct width"
             )
 
+
         else:
 
             result.spacing = 120
@@ -32,6 +36,7 @@ def evaluate_duct(data):
             result.add_reason(
                 "Standard duct spacing"
             )
+
 
     else:
 

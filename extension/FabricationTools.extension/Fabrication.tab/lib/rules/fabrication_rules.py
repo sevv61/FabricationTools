@@ -4,20 +4,40 @@ from .duct_rules import evaluate_duct
 from .pipe_rules import evaluate_pipe
 
 
+def evaluate_fabrication_part(data):
+
+    if data.part_type == "DUCT":
+        return evaluate_duct(data)
+
+    elif data.part_type == "PIPE":
+        return evaluate_pipe(data)
+
+    return None
+
 
 def evaluate_fabrication_part(data):
 
 
-    if data.part_type == "DUCT":
-
-        return evaluate_duct(data)
+    print("FABRICATION RULES LOADED")
 
 
-    elif data.part_type == "PIPE":
-
-        return evaluate_pipe(data)
+    result = {}
 
 
-    else:
+    result["part_type"] = (
+        data.part_type
+    )
 
-        return None
+
+    result["requires_hanger"] = True
+
+
+    result["spacing"] = 120
+
+
+    result["hanger_type"] = (
+        "TEST_HANGER"
+    )
+
+
+    return result
