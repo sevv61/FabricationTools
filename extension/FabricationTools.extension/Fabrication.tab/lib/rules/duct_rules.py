@@ -1,29 +1,18 @@
 # -*- coding: utf-8 -*-
 
-from base_rules import HangerRuleResult
+from .base_rules import HangerRuleResult
 
 
 
 def evaluate_duct(data):
 
-
     result = HangerRuleResult()
-
-
 
     result.requires_hanger = True
 
     result.hanger_type = (
         "DUCT_HANGER"
     )
-
-
-    #
-    # Initial spacing rules
-    #
-    # These will later be replaced
-    # with SMACNA / project standards
-    #
 
 
     if data.width:
@@ -36,7 +25,6 @@ def evaluate_duct(data):
                 "Large duct width"
             )
 
-
         else:
 
             result.spacing = 120
@@ -45,7 +33,6 @@ def evaluate_duct(data):
                 "Standard duct spacing"
             )
 
-
     else:
 
         result.spacing = 120
@@ -53,7 +40,6 @@ def evaluate_duct(data):
         result.add_reason(
             "Default duct spacing"
         )
-
 
 
     return result

@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from duct_rules import evaluate_duct
-from pipe_rules import evaluate_pipe
+from .duct_rules import evaluate_duct
+from .pipe_rules import evaluate_pipe
+
 
 
 def evaluate_part(data):
@@ -12,9 +13,11 @@ def evaluate_part(data):
         return evaluate_duct(data)
 
 
+
     elif data.part_type == "PIPE":
 
         return evaluate_pipe(data)
+
 
 
     else:

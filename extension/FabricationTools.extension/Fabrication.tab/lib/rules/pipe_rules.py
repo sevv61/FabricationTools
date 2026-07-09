@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from base_rules import HangerRuleResult
+from .base_rules import HangerRuleResult
 
 
 
 def evaluate_pipe(data):
-
 
     result = HangerRuleResult()
 
@@ -16,10 +15,6 @@ def evaluate_pipe(data):
         "PIPE_HANGER"
     )
 
-
-    #
-    # Initial placeholder
-    #
 
     result.spacing = 120
 
