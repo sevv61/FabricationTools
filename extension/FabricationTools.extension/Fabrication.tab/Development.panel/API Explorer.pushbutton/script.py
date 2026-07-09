@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from pyrevit import revit, forms
+
 from Autodesk.Revit.DB import FabricationPart
+from Autodesk.Revit.UI.Selection import ObjectType
 
 from api_explorer import explore_fabrication_part
 
@@ -11,7 +13,7 @@ doc = revit.doc
 
 
 ref = uidoc.Selection.PickObject(
-    "Element",
+    ObjectType.Element,
     "Select Fabrication Part"
 )
 
