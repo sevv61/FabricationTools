@@ -1,22 +1,33 @@
+# -*- coding: utf-8 -*-
+
 class HangerPreview(object):
 
-    def build_report(self, hanger_points):
+    def build_report(self, run):
 
         lines = []
 
-        for hanger in hanger_points:
+        lines.append(run.part.name)
 
-            lines.append(
-                "{:6.2f} ft   {}".format(
-                    hanger.station,
-                    hanger.status
-                )
+        lines.append("")
+
+        lines.append(
+            "Length : {:.2f}".format(
+                run.total_length
             )
+        )
 
-            for note in hanger.notes:
+        lines.append("")
 
-                lines.append(
-                    "   - {}".format(note)
-                )
+        lines.append(
+            "Hangers : {}".format(
+                run.hanger_count
+            )
+        )
+
+        lines.append("")
+
+        for hanger in run.hanger_points:
+
+            lines.append(hanger.to_string())
 
         return "\n".join(lines)

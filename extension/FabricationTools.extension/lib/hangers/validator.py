@@ -1,17 +1,11 @@
-# -*- coding: utf-8 -*-
-
 class HangerValidator(object):
 
-    def validate(self, hanger_points, geometry):
+    def __init__(self):
 
-        for hanger in hanger_points:
+        from rules.rule_engine import RuleEngine
 
-            if hanger.station < 1.0:
+        self.engine = RuleEngine()
 
-                hanger.status = hanger.STATUS_WARNING
+    def validate(self, run):
 
-                hanger.notes.append(
-                    "Closer than 1'-0\" to duct start."
-                )
-
-        return hanger_points
+        return self.engine.validate(run)

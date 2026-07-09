@@ -2,113 +2,107 @@
 """
 spacing.py
 
-Calculates hanger insertion points for Fabrication Parts.
+Calculates hanger insertion points for a Fabrication Part.
 
 Target:
     Autodesk Revit 2023
 """
 
 from hangers.hanger_point import HangerPoint
-import Autodesk.Revit.DB as DB
+from hangers.hanger_run import HangerRun
 
 
 class HangerSpacingEngine(object):
     """
-    Calculates hanger insertion locations along a fabrication part.
+    Calculates hanger insertion locations along a Fabrication Part.
     """
 
     def __init__(self, config):
-        """
-        Parameters
-        ----------
-        config : HangerConfiguration
-        """
+
         self.config = config
 
-    def calculate(self, geometry):
+    def calculate(self, part):
         """
-        Calculate hanger insertion points.
+        Calculate hanger insertion locations.
 
         Parameters
         ----------
-        geometry : GeometryInfo
+        part : FabricationPartInfo
 
         Returns
         -------
-        list[HangerPoint]
+        HangerRun
         """
 
-        points = []
+        run = HangerRun()
 
+        # Store references
+        run.part = part
+        run.geometry = part.geometry
+        run.config = self.config
+
+        geometry = part.geometry
+
+        # Validate geometry
         if geometry is None:
-            return points
+            run.add_warning("Part has no geometry.")
+            return run
 
         if geometry.curve is None:
-            return points
+            run.add_warning("Part has no LocationCurve.")
+            return run
 
         length = geometry.length
 
+        run.total_length = length
+
         if length < self.config.minimum_length:
-            return points
-
-        direction = geometry.direction
-
-        if direction is None:
-            return points
+            run.add_warning(
+                "Part shorter than minimum hanger length."
+            )
+            return run
 
         start = self.config.start_offset
         end = self.config.end_offset
         spacing = self.config.spacing
 
-        usable_length = length - start - end
+        run.spacing = spacing
 
-        if usable_length <= 0:
-            return points
+        usable = length - start - end
 
-        current_distance = start
+        run.usable_length = usable
 
-        while current_distance <= (length - end + 0.0001):
+        if usable <= 0:
+            run.add_warning("No usable length.")
+            return run
 
-            location = geometry.start_point + direction.Multiply(current_distance)
+        direction = geometry.direction
+
+        if direction is None:
+            run.add_warning("Unable to determine direction.")
+            return run
+
+        current = start
+
+        while current <= (length - end + 0.0001):
+
+            location = (
+                geometry.start_point +
+                direction.Multiply(current)
+            )
 
             hanger = HangerPoint(
                 location=location,
-                station=current_distance
+                station=current
             )
 
-            points.append(hanger)
+            # Populate metadata
+            hanger.direction = direction
+            hanger.host = part.element
+            hanger.part_name = part.name
 
-            current_distance += spacing
+            run.add_point(hanger)
 
-        return points
+            current += spacing
 
-    def count(self, geometry):
-        """
-        Return the number of calculated hanger locations.
-        """
-
-        return len(self.calculate(geometry))
-
-    def first(self, geometry):
-        """
-        Return the first hanger point.
-        """
-
-        points = self.calculate(geometry)
-
-        if points:
-            return points[0]
-
-        return None
-
-    def last(self, geometry):
-        """
-        Return the last hanger point.
-        """
-
-        points = self.calculate(geometry)
-
-        if points:
-            return points[-1]
-
-        return None
+        return run
