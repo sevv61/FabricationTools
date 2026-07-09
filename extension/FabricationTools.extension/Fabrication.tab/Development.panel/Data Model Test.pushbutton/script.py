@@ -44,8 +44,8 @@ from fabrication_extractor import (
     extract_fabrication_part
 )
 
-from rules.rule_engine import (
-    evaluate_part
+from rules.fabrication_rules import (
+    evaluate_fabrication_part
 )
 
 
@@ -100,7 +100,7 @@ data = extract_fabrication_part(
 # Evaluate Rules
 # ---------------------------------------------------------
 
-result = evaluate_part(
+result = evaluate_fabrication_part(
     data
 )
 

@@ -5,9 +5,7 @@ from .pipe_rules import evaluate_pipe
 
 
 
-def evaluate_part(data):
-
-    print("RULE ENGINE LOADED")
+def evaluate_fabrication_part(data):
 
 
     if data.part_type == "DUCT":
