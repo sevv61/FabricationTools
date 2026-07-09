@@ -32,6 +32,19 @@ if isinstance(part, FabricationPart):
     )
 
 
+    from rules.rule_engine import evaluate_part
+
+
+    result = evaluate_part(
+        data
+    )
+
+
     print(
         data.to_dict()
+    )
+
+
+    print(
+        result.to_dict()
     )
