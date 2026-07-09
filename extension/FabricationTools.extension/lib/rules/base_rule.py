@@ -1,19 +1,39 @@
 # -*- coding: utf-8 -*-
-"""
-Base class for all validation rules.
-"""
 
 
-class ValidationRule(object):
+class HangerRuleResult:
 
-    name = "Unnamed Rule"
 
-    enabled = True
+    def __init__(self):
 
-    def validate(self, run):
-        """
-        Validate a HangerRun.
+        self.requires_hanger = False
 
-        Returns the modified run.
-        """
-        return run
+        self.spacing = None
+
+        self.hanger_type = None
+
+        self.reason = []
+
+
+    def add_reason(self, text):
+
+        self.reason.append(text)
+
+
+
+    def to_dict(self):
+
+        return {
+
+            "requires_hanger":
+                self.requires_hanger,
+
+            "spacing":
+                self.spacing,
+
+            "hanger_type":
+                self.hanger_type,
+
+            "reason":
+                self.reason
+        }
