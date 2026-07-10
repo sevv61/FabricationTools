@@ -1,57 +1,29 @@
 # -*- coding: utf-8 -*-
-"""
-hanger_pipeline.py
 
-Coordinates the hanger calculation workflow.
-
-Target:
-    Autodesk Revit 2023
-"""
-
-from spacing.spacing import HangerSpacingEngine
-from hangers.validator import HangerValidator
+from collector import collect_parts
+from extractor import extract_parts
+from evaluator import evaluate_parts
+from generator import generate_points
+from validator import validate_points
 
 
 class HangerPipeline(object):
-    """
-    Coordinates hanger calculation and validation.
-    """
 
-    def __init__(self, config):
+    def __init__(self, doc):
 
-        self.config = config
+        self.doc = doc
 
-        self.spacing_engine = HangerSpacingEngine(config)
 
-        self.validator = HangerValidator()
+    def execute(self):
 
-    def execute(self, part):
-        """
-        Execute the complete hanger pipeline.
+        parts = collect_parts(self.doc)
 
-        Parameters
-        ----------
-        part : FabricationPartInfo
+        models = extract_parts(parts)
 
-        Returns
-        -------
-        HangerRun
-        """
+        rules = evaluate_parts(models)
 
-        # ---------------------------------------
-        # Calculate hanger locations
-        # ---------------------------------------
+        points = generate_points(models, rules)
 
-        run = self.spacing_engine.calculate(part)
+        valid_points = validate_points(points)
 
-        # ---------------------------------------
-        # Validate using Rule Engine
-        # ---------------------------------------
-
-        run = self.validator.validate(run)
-
-        # ---------------------------------------
-        # Return validated run
-        # ---------------------------------------
-
-        return run
+        return valid_points
